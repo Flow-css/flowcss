@@ -1,0 +1,931 @@
+/* ============================================================
+   FlowCSS v1.0.0 — The animation-first CSS utility framework
+   https://flowcss.dev
+   ============================================================ */
+
+/* ── 1. RESET & BASE ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Color palette */
+  --flow-white:    #ffffff;
+  --flow-black:    #0a0a0a;
+  --flow-gray-50:  #f9fafb;
+  --flow-gray-100: #f3f4f6;
+  --flow-gray-200: #e5e7eb;
+  --flow-gray-300: #d1d5db;
+  --flow-gray-400: #9ca3af;
+  --flow-gray-500: #6b7280;
+  --flow-gray-600: #4b5563;
+  --flow-gray-700: #374151;
+  --flow-gray-800: #1f2937;
+  --flow-gray-900: #111827;
+
+  --flow-primary:   #2563eb;
+  --flow-secondary: #7c3aed;
+  --flow-success:   #16a34a;
+  --flow-warning:   #d97706;
+  --flow-danger:    #dc2626;
+  --flow-info:      #0891b2;
+
+  /* Gradients */
+  --flow-gradient-primary: linear-gradient(135deg, #2563eb, #7c3aed);
+  --flow-gradient-warm:    linear-gradient(135deg, #f59e0b, #ef4444);
+  --flow-gradient-cool:    linear-gradient(135deg, #06b6d4, #2563eb);
+  --flow-gradient-neon:    linear-gradient(135deg, #a855f7, #06b6d4);
+  --flow-gradient-sunset:  linear-gradient(135deg, #f97316, #ec4899);
+  --flow-gradient-forest:  linear-gradient(135deg, #16a34a, #06b6d4);
+
+  /* Typography */
+  --flow-font-sans:  'Inter', 'Segoe UI', system-ui, sans-serif;
+  --flow-font-mono:  'Fira Code', 'Cascadia Code', monospace;
+  --flow-font-serif: 'Lora', Georgia, serif;
+
+  /* Spacing scale */
+  --flow-space-1:  0.25rem;
+  --flow-space-2:  0.5rem;
+  --flow-space-3:  0.75rem;
+  --flow-space-4:  1rem;
+  --flow-space-5:  1.25rem;
+  --flow-space-6:  1.5rem;
+  --flow-space-8:  2rem;
+  --flow-space-10: 2.5rem;
+  --flow-space-12: 3rem;
+  --flow-space-16: 4rem;
+  --flow-space-20: 5rem;
+  --flow-space-24: 6rem;
+
+  /* Border radius */
+  --flow-radius-sm: 0.25rem;
+  --flow-radius:    0.5rem;
+  --flow-radius-md: 0.75rem;
+  --flow-radius-lg: 1rem;
+  --flow-radius-xl: 1.5rem;
+  --flow-radius-2xl: 2rem;
+  --flow-radius-full: 9999px;
+
+  /* Shadows */
+  --flow-shadow-sm:  0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  --flow-shadow:     0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+  --flow-shadow-md:  0 10px 25px rgba(0,0,0,.1), 0 4px 6px rgba(0,0,0,.05);
+  --flow-shadow-lg:  0 20px 40px rgba(0,0,0,.12), 0 8px 16px rgba(0,0,0,.06);
+  --flow-shadow-xl:  0 32px 64px rgba(0,0,0,.14);
+  --flow-shadow-glow-primary:   0 0 20px rgba(37,99,235,.4);
+  --flow-shadow-glow-secondary: 0 0 20px rgba(124,58,237,.4);
+  --flow-shadow-glow-success:   0 0 20px rgba(22,163,74,.4);
+  --flow-shadow-glow-danger:    0 0 20px rgba(220,38,38,.4);
+
+  /* Transitions */
+  --flow-ease:        cubic-bezier(0.4, 0, 0.2, 1);
+  --flow-ease-in:     cubic-bezier(0.4, 0, 1, 1);
+  --flow-ease-out:    cubic-bezier(0, 0, 0.2, 1);
+  --flow-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --flow-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --flow-ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Durations */
+  --flow-dur-fast:   150ms;
+  --flow-dur-base:   250ms;
+  --flow-dur-slow:   400ms;
+  --flow-dur-slower: 600ms;
+  --flow-dur-lazy:   900ms;
+}
+
+/* ── 2. DISPLAY UTILITIES ─────────────────────────────────── */
+.f-block         { display: block; }
+.f-inline        { display: inline; }
+.f-inline-block  { display: inline-block; }
+.f-flex          { display: flex; }
+.f-inline-flex   { display: inline-flex; }
+.f-grid          { display: grid; }
+.f-inline-grid   { display: inline-grid; }
+.f-none          { display: none; }
+.f-hidden        { visibility: hidden; }
+
+/* Flex shortcuts */
+.f-row           { display: flex; flex-direction: row; }
+.f-col           { display: flex; flex-direction: column; }
+.f-center        { display: flex; align-items: center; justify-content: center; }
+.f-between       { display: flex; align-items: center; justify-content: space-between; }
+.f-around        { display: flex; align-items: center; justify-content: space-around; }
+.f-evenly        { display: flex; align-items: center; justify-content: space-evenly; }
+.f-start         { display: flex; align-items: flex-start; }
+.f-end           { display: flex; align-items: flex-end; }
+.f-wrap          { flex-wrap: wrap; }
+.f-nowrap        { flex-wrap: nowrap; }
+.f-grow          { flex-grow: 1; }
+.f-shrink-0      { flex-shrink: 0; }
+.f-1             { flex: 1; }
+
+/* Grid shortcuts */
+.f-grid-2        { display: grid; grid-template-columns: repeat(2, 1fr); }
+.f-grid-3        { display: grid; grid-template-columns: repeat(3, 1fr); }
+.f-grid-4        { display: grid; grid-template-columns: repeat(4, 1fr); }
+.f-grid-5        { display: grid; grid-template-columns: repeat(5, 1fr); }
+.f-grid-6        { display: grid; grid-template-columns: repeat(6, 1fr); }
+.f-grid-auto     { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.f-grid-auto-sm  { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.f-grid-auto-lg  { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.f-col-span-2    { grid-column: span 2; }
+.f-col-span-3    { grid-column: span 3; }
+.f-col-full      { grid-column: 1 / -1; }
+
+/* Gap */
+.f-gap-1  { gap: var(--flow-space-1); }
+.f-gap-2  { gap: var(--flow-space-2); }
+.f-gap-3  { gap: var(--flow-space-3); }
+.f-gap-4  { gap: var(--flow-space-4); }
+.f-gap-5  { gap: var(--flow-space-5); }
+.f-gap-6  { gap: var(--flow-space-6); }
+.f-gap-8  { gap: var(--flow-space-8); }
+.f-gap-10 { gap: var(--flow-space-10); }
+.f-gap-12 { gap: var(--flow-space-12); }
+.f-gap-16 { gap: var(--flow-space-16); }
+
+/* ── 3. SPACING ───────────────────────────────────────────── */
+.f-p-0  { padding: 0; }
+.f-p-1  { padding: var(--flow-space-1); }
+.f-p-2  { padding: var(--flow-space-2); }
+.f-p-3  { padding: var(--flow-space-3); }
+.f-p-4  { padding: var(--flow-space-4); }
+.f-p-5  { padding: var(--flow-space-5); }
+.f-p-6  { padding: var(--flow-space-6); }
+.f-p-8  { padding: var(--flow-space-8); }
+.f-p-10 { padding: var(--flow-space-10); }
+.f-p-12 { padding: var(--flow-space-12); }
+.f-p-16 { padding: var(--flow-space-16); }
+
+.f-px-1  { padding-left: var(--flow-space-1);  padding-right: var(--flow-space-1); }
+.f-px-2  { padding-left: var(--flow-space-2);  padding-right: var(--flow-space-2); }
+.f-px-3  { padding-left: var(--flow-space-3);  padding-right: var(--flow-space-3); }
+.f-px-4  { padding-left: var(--flow-space-4);  padding-right: var(--flow-space-4); }
+.f-px-5  { padding-left: var(--flow-space-5);  padding-right: var(--flow-space-5); }
+.f-px-6  { padding-left: var(--flow-space-6);  padding-right: var(--flow-space-6); }
+.f-px-8  { padding-left: var(--flow-space-8);  padding-right: var(--flow-space-8); }
+.f-px-10 { padding-left: var(--flow-space-10); padding-right: var(--flow-space-10); }
+.f-px-12 { padding-left: var(--flow-space-12); padding-right: var(--flow-space-12); }
+
+.f-py-1  { padding-top: var(--flow-space-1);  padding-bottom: var(--flow-space-1); }
+.f-py-2  { padding-top: var(--flow-space-2);  padding-bottom: var(--flow-space-2); }
+.f-py-3  { padding-top: var(--flow-space-3);  padding-bottom: var(--flow-space-3); }
+.f-py-4  { padding-top: var(--flow-space-4);  padding-bottom: var(--flow-space-4); }
+.f-py-5  { padding-top: var(--flow-space-5);  padding-bottom: var(--flow-space-5); }
+.f-py-6  { padding-top: var(--flow-space-6);  padding-bottom: var(--flow-space-6); }
+.f-py-8  { padding-top: var(--flow-space-8);  padding-bottom: var(--flow-space-8); }
+.f-py-10 { padding-top: var(--flow-space-10); padding-bottom: var(--flow-space-10); }
+.f-py-12 { padding-top: var(--flow-space-12); padding-bottom: var(--flow-space-12); }
+
+.f-m-0  { margin: 0; }
+.f-m-1  { margin: var(--flow-space-1); }
+.f-m-2  { margin: var(--flow-space-2); }
+.f-m-3  { margin: var(--flow-space-3); }
+.f-m-4  { margin: var(--flow-space-4); }
+.f-m-5  { margin: var(--flow-space-5); }
+.f-m-6  { margin: var(--flow-space-6); }
+.f-m-8  { margin: var(--flow-space-8); }
+.f-m-auto { margin: auto; }
+.f-mx-auto { margin-left: auto; margin-right: auto; }
+.f-mt-1  { margin-top: var(--flow-space-1); }
+.f-mt-2  { margin-top: var(--flow-space-2); }
+.f-mt-4  { margin-top: var(--flow-space-4); }
+.f-mt-6  { margin-top: var(--flow-space-6); }
+.f-mt-8  { margin-top: var(--flow-space-8); }
+.f-mb-1  { margin-bottom: var(--flow-space-1); }
+.f-mb-2  { margin-bottom: var(--flow-space-2); }
+.f-mb-4  { margin-bottom: var(--flow-space-4); }
+.f-mb-6  { margin-bottom: var(--flow-space-6); }
+.f-mb-8  { margin-bottom: var(--flow-space-8); }
+
+/* ── 4. SIZING ────────────────────────────────────────────── */
+.f-w-full    { width: 100%; }
+.f-w-screen  { width: 100vw; }
+.f-w-half    { width: 50%; }
+.f-w-third   { width: 33.333%; }
+.f-w-quarter { width: 25%; }
+.f-w-auto    { width: auto; }
+.f-h-full    { height: 100%; }
+.f-h-screen  { height: 100vh; }
+.f-h-auto    { height: auto; }
+.f-min-h-screen { min-height: 100vh; }
+
+/* ── 5. TYPOGRAPHY ────────────────────────────────────────── */
+.f-font-sans   { font-family: var(--flow-font-sans); }
+.f-font-mono   { font-family: var(--flow-font-mono); }
+.f-font-serif  { font-family: var(--flow-font-serif); }
+
+.f-text-xs   { font-size: 0.75rem;  line-height: 1rem; }
+.f-text-sm   { font-size: 0.875rem; line-height: 1.25rem; }
+.f-text-base { font-size: 1rem;     line-height: 1.5rem; }
+.f-text-lg   { font-size: 1.125rem; line-height: 1.75rem; }
+.f-text-xl   { font-size: 1.25rem;  line-height: 1.75rem; }
+.f-text-2xl  { font-size: 1.5rem;   line-height: 2rem; }
+.f-text-3xl  { font-size: 1.875rem; line-height: 2.25rem; }
+.f-text-4xl  { font-size: 2.25rem;  line-height: 2.5rem; }
+.f-text-5xl  { font-size: 3rem;     line-height: 1.1; }
+.f-text-6xl  { font-size: 3.75rem;  line-height: 1; }
+.f-text-7xl  { font-size: 4.5rem;   line-height: 1; }
+.f-text-8xl  { font-size: 6rem;     line-height: 1; }
+
+.f-font-thin       { font-weight: 100; }
+.f-font-light      { font-weight: 300; }
+.f-font-normal     { font-weight: 400; }
+.f-font-medium     { font-weight: 500; }
+.f-font-semibold   { font-weight: 600; }
+.f-font-bold       { font-weight: 700; }
+.f-font-extrabold  { font-weight: 800; }
+.f-font-black      { font-weight: 900; }
+
+.f-text-left    { text-align: left; }
+.f-text-center  { text-align: center; }
+.f-text-right   { text-align: right; }
+.f-text-justify { text-align: justify; }
+
+.f-leading-tight  { line-height: 1.25; }
+.f-leading-snug   { line-height: 1.375; }
+.f-leading-normal { line-height: 1.5; }
+.f-leading-relaxed { line-height: 1.625; }
+.f-leading-loose  { line-height: 2; }
+
+.f-tracking-tight  { letter-spacing: -0.05em; }
+.f-tracking-normal { letter-spacing: 0; }
+.f-tracking-wide   { letter-spacing: 0.05em; }
+.f-tracking-wider  { letter-spacing: 0.1em; }
+.f-tracking-widest { letter-spacing: 0.2em; }
+
+.f-uppercase   { text-transform: uppercase; }
+.f-lowercase   { text-transform: lowercase; }
+.f-capitalize  { text-transform: capitalize; }
+.f-no-underline { text-decoration: none; }
+.f-underline    { text-decoration: underline; }
+.f-line-through { text-decoration: line-through; }
+.f-truncate     { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Text gradients — unique to FlowCSS */
+.f-text-gradient-primary   { background: var(--flow-gradient-primary);  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.f-text-gradient-warm      { background: var(--flow-gradient-warm);     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.f-text-gradient-cool      { background: var(--flow-gradient-cool);     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.f-text-gradient-neon      { background: var(--flow-gradient-neon);     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.f-text-gradient-sunset    { background: var(--flow-gradient-sunset);   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.f-text-gradient-forest    { background: var(--flow-gradient-forest);   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* ── 6. COLORS ────────────────────────────────────────────── */
+.f-text-white      { color: var(--flow-white); }
+.f-text-black      { color: var(--flow-black); }
+.f-text-gray-50    { color: var(--flow-gray-50); }
+.f-text-gray-100   { color: var(--flow-gray-100); }
+.f-text-gray-200   { color: var(--flow-gray-200); }
+.f-text-gray-300   { color: var(--flow-gray-300); }
+.f-text-gray-400   { color: var(--flow-gray-400); }
+.f-text-gray-500   { color: var(--flow-gray-500); }
+.f-text-gray-600   { color: var(--flow-gray-600); }
+.f-text-gray-700   { color: var(--flow-gray-700); }
+.f-text-gray-800   { color: var(--flow-gray-800); }
+.f-text-gray-900   { color: var(--flow-gray-900); }
+.f-text-primary    { color: var(--flow-primary); }
+.f-text-secondary  { color: var(--flow-secondary); }
+.f-text-success    { color: var(--flow-success); }
+.f-text-warning    { color: var(--flow-warning); }
+.f-text-danger     { color: var(--flow-danger); }
+.f-text-info       { color: var(--flow-info); }
+
+.f-bg-white        { background-color: var(--flow-white); }
+.f-bg-black        { background-color: var(--flow-black); }
+.f-bg-gray-50      { background-color: var(--flow-gray-50); }
+.f-bg-gray-100     { background-color: var(--flow-gray-100); }
+.f-bg-gray-200     { background-color: var(--flow-gray-200); }
+.f-bg-gray-800     { background-color: var(--flow-gray-800); }
+.f-bg-gray-900     { background-color: var(--flow-gray-900); }
+.f-bg-primary      { background-color: var(--flow-primary); }
+.f-bg-secondary    { background-color: var(--flow-secondary); }
+.f-bg-success      { background-color: var(--flow-success); }
+.f-bg-warning      { background-color: var(--flow-warning); }
+.f-bg-danger       { background-color: var(--flow-danger); }
+.f-bg-transparent  { background-color: transparent; }
+
+/* Gradient backgrounds */
+.f-bg-gradient-primary   { background: var(--flow-gradient-primary); }
+.f-bg-gradient-warm      { background: var(--flow-gradient-warm); }
+.f-bg-gradient-cool      { background: var(--flow-gradient-cool); }
+.f-bg-gradient-neon      { background: var(--flow-gradient-neon); }
+.f-bg-gradient-sunset    { background: var(--flow-gradient-sunset); }
+.f-bg-gradient-forest    { background: var(--flow-gradient-forest); }
+
+/* Glassmorphism — unique to FlowCSS */
+.f-glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.f-glass-dark {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.f-glass-primary {
+  background: rgba(37, 99, 235, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+}
+
+/* ── 7. BORDERS ───────────────────────────────────────────── */
+.f-border        { border: 1px solid var(--flow-gray-200); }
+.f-border-2      { border: 2px solid var(--flow-gray-200); }
+.f-border-0      { border: none; }
+.f-border-top    { border-top: 1px solid var(--flow-gray-200); }
+.f-border-bottom { border-bottom: 1px solid var(--flow-gray-200); }
+.f-border-primary   { border-color: var(--flow-primary); }
+.f-border-secondary { border-color: var(--flow-secondary); }
+.f-border-danger    { border-color: var(--flow-danger); }
+
+.f-rounded-sm   { border-radius: var(--flow-radius-sm); }
+.f-rounded      { border-radius: var(--flow-radius); }
+.f-rounded-md   { border-radius: var(--flow-radius-md); }
+.f-rounded-lg   { border-radius: var(--flow-radius-lg); }
+.f-rounded-xl   { border-radius: var(--flow-radius-xl); }
+.f-rounded-2xl  { border-radius: var(--flow-radius-2xl); }
+.f-rounded-full { border-radius: var(--flow-radius-full); }
+
+/* ── 8. SHADOWS ───────────────────────────────────────────── */
+.f-shadow-sm        { box-shadow: var(--flow-shadow-sm); }
+.f-shadow           { box-shadow: var(--flow-shadow); }
+.f-shadow-md        { box-shadow: var(--flow-shadow-md); }
+.f-shadow-lg        { box-shadow: var(--flow-shadow-lg); }
+.f-shadow-xl        { box-shadow: var(--flow-shadow-xl); }
+.f-shadow-none      { box-shadow: none; }
+.f-shadow-glow-primary   { box-shadow: var(--flow-shadow-glow-primary); }
+.f-shadow-glow-secondary { box-shadow: var(--flow-shadow-glow-secondary); }
+.f-shadow-glow-success   { box-shadow: var(--flow-shadow-glow-success); }
+.f-shadow-glow-danger    { box-shadow: var(--flow-shadow-glow-danger); }
+
+/* ── 9. POSITION & OVERFLOW ───────────────────────────────── */
+.f-relative  { position: relative; }
+.f-absolute  { position: absolute; }
+.f-fixed     { position: fixed; }
+.f-sticky    { position: sticky; }
+.f-static    { position: static; }
+.f-inset-0   { top: 0; right: 0; bottom: 0; left: 0; }
+.f-top-0     { top: 0; }
+.f-right-0   { right: 0; }
+.f-bottom-0  { bottom: 0; }
+.f-left-0    { left: 0; }
+.f-z-0   { z-index: 0; }
+.f-z-10  { z-index: 10; }
+.f-z-20  { z-index: 20; }
+.f-z-50  { z-index: 50; }
+.f-z-100 { z-index: 100; }
+.f-overflow-hidden { overflow: hidden; }
+.f-overflow-auto   { overflow: auto; }
+.f-overflow-scroll { overflow: scroll; }
+.f-overflow-x-auto { overflow-x: auto; }
+
+/* ── 10. OPACITY & CURSOR ─────────────────────────────────── */
+.f-opacity-0   { opacity: 0; }
+.f-opacity-25  { opacity: 0.25; }
+.f-opacity-50  { opacity: 0.5; }
+.f-opacity-75  { opacity: 0.75; }
+.f-opacity-100 { opacity: 1; }
+.f-cursor-pointer  { cursor: pointer; }
+.f-cursor-default  { cursor: default; }
+.f-cursor-not-allowed { cursor: not-allowed; }
+.f-select-none { user-select: none; }
+.f-pointer-events-none { pointer-events: none; }
+
+/* ── 11. OBJECT FIT & ASPECT RATIO ───────────────────────── */
+.f-object-cover    { object-fit: cover; }
+.f-object-contain  { object-fit: contain; }
+.f-object-fill     { object-fit: fill; }
+.f-aspect-square   { aspect-ratio: 1 / 1; }
+.f-aspect-video    { aspect-ratio: 16 / 9; }
+.f-aspect-portrait { aspect-ratio: 3 / 4; }
+.f-aspect-wide     { aspect-ratio: 21 / 9; }
+
+/* ── 12. CONTAINER ────────────────────────────────────────── */
+.f-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--flow-space-4);
+  padding-right: var(--flow-space-4);
+}
+.f-container-sm  { max-width: 640px;  margin: 0 auto; }
+.f-container-md  { max-width: 768px;  margin: 0 auto; }
+.f-container-lg  { max-width: 1024px; margin: 0 auto; }
+.f-container-xl  { max-width: 1280px; margin: 0 auto; }
+.f-container-2xl { max-width: 1536px; margin: 0 auto; }
+
+/* ── 13. RESPONSIVE BREAKPOINTS ───────────────────────────── */
+@media (max-width: 639px) {
+  .f-sm\:hidden { display: none; }
+  .f-sm\:block  { display: block; }
+  .f-sm\:flex   { display: flex; }
+  .f-sm\:col    { flex-direction: column; }
+  .f-sm\:text-center { text-align: center; }
+  .f-sm\:grid-1 { grid-template-columns: 1fr; }
+  .f-sm\:p-4    { padding: var(--flow-space-4); }
+  .f-sm\:text-3xl { font-size: 1.875rem; }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .f-md\:hidden { display: none; }
+  .f-md\:block  { display: block; }
+  .f-md\:grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .f-md\:flex   { display: flex; }
+}
+@media (min-width: 1024px) {
+  .f-lg\:block  { display: block; }
+  .f-lg\:flex   { display: flex; }
+  .f-lg\:grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .f-lg\:grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .f-lg\:hidden { display: none; }
+}
+
+/* ── 14. KEYFRAMES ────────────────────────────────────────── */
+
+/* Entrance */
+@keyframes f-fade-in          { from { opacity: 0; } to { opacity: 1; } }
+@keyframes f-fade-out         { from { opacity: 1; } to { opacity: 0; } }
+@keyframes f-slide-up         { from { opacity: 0; transform: translateY(30px); }   to { opacity: 1; transform: translateY(0); } }
+@keyframes f-slide-down       { from { opacity: 0; transform: translateY(-30px); }  to { opacity: 1; transform: translateY(0); } }
+@keyframes f-slide-left       { from { opacity: 0; transform: translateX(30px); }   to { opacity: 1; transform: translateX(0); } }
+@keyframes f-slide-right      { from { opacity: 0; transform: translateX(-30px); }  to { opacity: 1; transform: translateX(0); } }
+@keyframes f-zoom-in          { from { opacity: 0; transform: scale(0.85); }        to { opacity: 1; transform: scale(1); } }
+@keyframes f-zoom-out         { from { opacity: 0; transform: scale(1.15); }        to { opacity: 1; transform: scale(1); } }
+@keyframes f-flip-x           { from { opacity: 0; transform: rotateX(90deg); }     to { opacity: 1; transform: rotateX(0deg); } }
+@keyframes f-flip-y           { from { opacity: 0; transform: rotateY(90deg); }     to { opacity: 1; transform: rotateY(0deg); } }
+
+/* Bounce & spring */
+@keyframes f-bounce           { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-20px); } 60% { transform: translateY(-10px); } }
+@keyframes f-bounce-in        { 0% { opacity: 0; transform: scale(0.3); } 50% { opacity: 1; transform: scale(1.05); } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
+@keyframes f-bounce-in-up     { from { opacity: 0; transform: translateY(60px) scale(0.9); } 60% { transform: translateY(-10px) scale(1.02); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes f-spring           { 0% { transform: scale(0); } 60% { transform: scale(1.1); } 80% { transform: scale(0.95); } 100% { transform: scale(1); } }
+
+/* Attention */
+@keyframes f-pulse            { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes f-ping             { 0% { transform: scale(1); opacity: 1; } 75%,100% { transform: scale(2); opacity: 0; } }
+@keyframes f-shake            { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-6px); } 40%,80% { transform: translateX(6px); } }
+@keyframes f-wobble           { 0%,100% { transform: rotate(0deg); } 15% { transform: rotate(-10deg); } 30% { transform: rotate(8deg); } 45% { transform: rotate(-6deg); } 60% { transform: rotate(4deg); } 75% { transform: rotate(-2deg); } }
+@keyframes f-tada             { 0% { transform: scale(1) rotate(0deg); } 10%,20% { transform: scale(0.9) rotate(-3deg); } 30%,50%,70%,90% { transform: scale(1.1) rotate(3deg); } 40%,60%,80% { transform: scale(1.1) rotate(-3deg); } 100% { transform: scale(1) rotate(0deg); } }
+@keyframes f-heartbeat        { 0%,100% { transform: scale(1); } 14% { transform: scale(1.3); } 28% { transform: scale(1); } 42% { transform: scale(1.3); } 70% { transform: scale(1); } }
+@keyframes f-jello            { 0%,100% { transform: skewX(0) skewY(0); } 30% { transform: skewX(-12deg) skewY(-12deg); } 40% { transform: skewX(10deg) skewY(10deg); } 50% { transform: skewX(-6deg) skewY(-6deg); } 65% { transform: skewX(4deg) skewY(4deg); } 75% { transform: skewX(-2deg) skewY(-2deg); } }
+
+/* Loaders */
+@keyframes f-spin             { from { transform: rotate(0deg); }    to { transform: rotate(360deg); } }
+@keyframes f-spin-reverse     { from { transform: rotate(360deg); }  to { transform: rotate(0deg); } }
+@keyframes f-spin-slow        { from { transform: rotate(0deg); }    to { transform: rotate(360deg); } }
+@keyframes f-swing            { 0%,100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+
+/* Text */
+@keyframes f-type             { from { width: 0; } to { width: 100%; } }
+@keyframes f-blink            { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes f-shimmer          { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+@keyframes f-wave-text        { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+/* Background */
+@keyframes f-gradient-shift   { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes f-aurora            { 0%,100% { background-position: 0% 50%; filter: hue-rotate(0deg); } 50% { background-position: 100% 50%; filter: hue-rotate(45deg); } }
+
+/* Floating & levitation */
+@keyframes f-float            { 0%,100% { transform: translateY(0px); }    50% { transform: translateY(-12px); } }
+@keyframes f-float-sm         { 0%,100% { transform: translateY(0px); }    50% { transform: translateY(-6px); } }
+@keyframes f-float-lg         { 0%,100% { transform: translateY(0px); }    50% { transform: translateY(-20px); } }
+@keyframes f-sway             { 0%,100% { transform: rotate(-3deg); }      50% { transform: rotate(3deg); } }
+
+/* 3D */
+@keyframes f-rotate-3d        { from { transform: rotate3d(1,1,0,0deg); }  to { transform: rotate3d(1,1,0,360deg); } }
+@keyframes f-flip-card        { 0% { transform: perspective(600px) rotateY(0deg); } 100% { transform: perspective(600px) rotateY(180deg); } }
+@keyframes f-morph            { 0%,100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } 50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; } }
+
+/* Count up (via CSS counter hack) */
+@keyframes f-count-up         { from { content: "0"; } to { content: "100"; } }
+
+/* ── 15. ANIMATION UTILITIES ──────────────────────────────── */
+
+/* Entrance animations */
+.f-anim-fade-in        { animation: f-fade-in        var(--flow-dur-slow) var(--flow-ease) both; }
+.f-anim-fade-out       { animation: f-fade-out       var(--flow-dur-slow) var(--flow-ease) both; }
+.f-anim-slide-up       { animation: f-slide-up       var(--flow-dur-slow) var(--flow-ease-out) both; }
+.f-anim-slide-down     { animation: f-slide-down     var(--flow-dur-slow) var(--flow-ease-out) both; }
+.f-anim-slide-left     { animation: f-slide-left     var(--flow-dur-slow) var(--flow-ease-out) both; }
+.f-anim-slide-right    { animation: f-slide-right    var(--flow-dur-slow) var(--flow-ease-out) both; }
+.f-anim-zoom-in        { animation: f-zoom-in        var(--flow-dur-slow) var(--flow-ease-bounce) both; }
+.f-anim-zoom-out       { animation: f-zoom-out       var(--flow-dur-slow) var(--flow-ease-bounce) both; }
+.f-anim-flip-x         { animation: f-flip-x         var(--flow-dur-slow) var(--flow-ease) both; }
+.f-anim-flip-y         { animation: f-flip-y         var(--flow-dur-slow) var(--flow-ease) both; }
+.f-anim-bounce-in      { animation: f-bounce-in      var(--flow-dur-slower) var(--flow-ease-spring) both; }
+.f-anim-bounce-in-up   { animation: f-bounce-in-up   var(--flow-dur-slower) var(--flow-ease-spring) both; }
+.f-anim-spring         { animation: f-spring         var(--flow-dur-slower) var(--flow-ease-spring) both; }
+
+/* Attention seekers */
+.f-anim-bounce         { animation: f-bounce     0.8s var(--flow-ease-bounce) infinite; }
+.f-anim-pulse          { animation: f-pulse      2s   ease-in-out              infinite; }
+.f-anim-ping           { animation: f-ping       1s   var(--flow-ease-out)     infinite; }
+.f-anim-shake          { animation: f-shake      0.6s var(--flow-ease)         both; }
+.f-anim-wobble         { animation: f-wobble     0.8s var(--flow-ease)         both; }
+.f-anim-tada           { animation: f-tada       0.9s var(--flow-ease)         both; }
+.f-anim-heartbeat      { animation: f-heartbeat  1.4s ease-in-out              infinite; }
+.f-anim-jello          { animation: f-jello      0.9s var(--flow-ease)         both; }
+
+/* Continuous */
+.f-anim-spin           { animation: f-spin         1s   linear    infinite; }
+.f-anim-spin-slow      { animation: f-spin-slow    3s   linear    infinite; }
+.f-anim-spin-reverse   { animation: f-spin-reverse 1s   linear    infinite; }
+.f-anim-swing          { animation: f-swing        1s   ease-in-out infinite alternate; }
+.f-anim-float          { animation: f-float        3s   ease-in-out infinite; }
+.f-anim-float-sm       { animation: f-float-sm     2.5s ease-in-out infinite; }
+.f-anim-float-lg       { animation: f-float-lg     3.5s ease-in-out infinite; }
+.f-anim-sway           { animation: f-sway         3s   ease-in-out infinite alternate; }
+.f-anim-morph          { animation: f-morph        6s   ease-in-out infinite; }
+.f-anim-rotate-3d      { animation: f-rotate-3d    4s   linear    infinite; }
+
+/* Background animations */
+.f-anim-gradient       {
+  background: linear-gradient(270deg, #2563eb, #7c3aed, #06b6d4, #16a34a);
+  background-size: 400% 400%;
+  animation: f-gradient-shift 8s ease infinite;
+}
+.f-anim-aurora         {
+  background: linear-gradient(135deg, #a855f7, #06b6d4, #2563eb, #a855f7);
+  background-size: 400% 400%;
+  animation: f-aurora 10s ease infinite;
+}
+
+/* Text shimmer */
+.f-anim-shimmer {
+  background: linear-gradient(90deg, var(--flow-gray-300) 25%, var(--flow-gray-100) 50%, var(--flow-gray-300) 75%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: f-shimmer 2s linear infinite;
+}
+
+/* Typewriter */
+.f-anim-typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid currentColor;
+  animation: f-type 3s steps(40, end), f-blink 0.8s step-end infinite;
+}
+
+/* Animation delays */
+.f-delay-0    { animation-delay: 0ms; }
+.f-delay-75   { animation-delay: 75ms; }
+.f-delay-100  { animation-delay: 100ms; }
+.f-delay-150  { animation-delay: 150ms; }
+.f-delay-200  { animation-delay: 200ms; }
+.f-delay-300  { animation-delay: 300ms; }
+.f-delay-400  { animation-delay: 400ms; }
+.f-delay-500  { animation-delay: 500ms; }
+.f-delay-700  { animation-delay: 700ms; }
+.f-delay-1000 { animation-delay: 1000ms; }
+.f-delay-1500 { animation-delay: 1500ms; }
+
+/* Animation durations */
+.f-dur-fast   { animation-duration: var(--flow-dur-fast); }
+.f-dur-base   { animation-duration: var(--flow-dur-base); }
+.f-dur-slow   { animation-duration: var(--flow-dur-slow); }
+.f-dur-slower { animation-duration: var(--flow-dur-slower); }
+.f-dur-lazy   { animation-duration: var(--flow-dur-lazy); }
+
+/* Animation fill modes */
+.f-fill-none    { animation-fill-mode: none; }
+.f-fill-forwards { animation-fill-mode: forwards; }
+.f-fill-backwards { animation-fill-mode: backwards; }
+.f-fill-both    { animation-fill-mode: both; }
+
+/* Pause / play */
+.f-paused  { animation-play-state: paused; }
+.f-running { animation-play-state: running; }
+
+/* Iteration */
+.f-once     { animation-iteration-count: 1; }
+.f-twice    { animation-iteration-count: 2; }
+.f-infinite { animation-iteration-count: infinite; }
+
+/* ── 16. HOVER TRANSITION UTILITIES ───────────────────────── */
+.f-transition         { transition: all var(--flow-dur-base) var(--flow-ease); }
+.f-transition-colors  { transition: color var(--flow-dur-base) var(--flow-ease), background-color var(--flow-dur-base) var(--flow-ease), border-color var(--flow-dur-base) var(--flow-ease); }
+.f-transition-opacity { transition: opacity var(--flow-dur-base) var(--flow-ease); }
+.f-transition-shadow  { transition: box-shadow var(--flow-dur-base) var(--flow-ease); }
+.f-transition-transform { transition: transform var(--flow-dur-base) var(--flow-ease); }
+.f-transition-none    { transition: none; }
+
+/* Hover transforms */
+.f-hover-lift:hover         { transform: translateY(-4px); box-shadow: var(--flow-shadow-lg); }
+.f-hover-lift-sm:hover      { transform: translateY(-2px); box-shadow: var(--flow-shadow-md); }
+.f-hover-press:hover        { transform: scale(0.97); }
+.f-hover-grow:hover         { transform: scale(1.05); }
+.f-hover-grow-lg:hover      { transform: scale(1.1); }
+.f-hover-shrink:hover       { transform: scale(0.95); }
+.f-hover-rotate:hover       { transform: rotate(5deg); }
+.f-hover-rotate-neg:hover   { transform: rotate(-5deg); }
+.f-hover-skew:hover         { transform: skewX(-5deg); }
+.f-hover-glow-primary:hover { box-shadow: var(--flow-shadow-glow-primary); }
+.f-hover-glow-secondary:hover { box-shadow: var(--flow-shadow-glow-secondary); }
+.f-hover-bright:hover       { filter: brightness(1.1); }
+.f-hover-dim:hover          { filter: brightness(0.85); }
+.f-hover-blur:hover         { filter: blur(2px); }
+.f-hover-saturate:hover     { filter: saturate(1.5); }
+
+/* All hover utilities need transition */
+[class*="f-hover-"] { transition: all var(--flow-dur-base) var(--flow-ease); }
+
+/* ── 17. SCROLL ANIMATION (Intersection Observer via JS) ──── */
+/* These classes are activated by flowcss.js automatically */
+.f-reveal               { opacity: 0; transform: translateY(30px); transition: opacity 0.6s var(--flow-ease), transform 0.6s var(--flow-ease); }
+.f-reveal.f-visible     { opacity: 1; transform: translateY(0); }
+.f-reveal-left          { opacity: 0; transform: translateX(-40px); transition: opacity 0.6s var(--flow-ease), transform 0.6s var(--flow-ease); }
+.f-reveal-left.f-visible { opacity: 1; transform: translateX(0); }
+.f-reveal-right         { opacity: 0; transform: translateX(40px); transition: opacity 0.6s var(--flow-ease), transform 0.6s var(--flow-ease); }
+.f-reveal-right.f-visible { opacity: 1; transform: translateX(0); }
+.f-reveal-zoom          { opacity: 0; transform: scale(0.9); transition: opacity 0.6s var(--flow-ease), transform 0.6s var(--flow-ease); }
+.f-reveal-zoom.f-visible { opacity: 1; transform: scale(1); }
+.f-reveal-flip          { opacity: 0; transform: rotateY(45deg); transition: opacity 0.7s var(--flow-ease), transform 0.7s var(--flow-ease); }
+.f-reveal-flip.f-visible { opacity: 1; transform: rotateY(0); }
+
+/* ── 18. STAGGER CHILDREN ─────────────────────────────────── */
+/* Apply f-stagger to a parent; children animate in sequence */
+.f-stagger > *          { opacity: 0; transform: translateY(20px); transition: opacity 0.4s var(--flow-ease), transform 0.4s var(--flow-ease); }
+.f-stagger.f-visible > * { opacity: 1; transform: translateY(0); }
+.f-stagger.f-visible > *:nth-child(1)  { transition-delay: 0ms; }
+.f-stagger.f-visible > *:nth-child(2)  { transition-delay: 80ms; }
+.f-stagger.f-visible > *:nth-child(3)  { transition-delay: 160ms; }
+.f-stagger.f-visible > *:nth-child(4)  { transition-delay: 240ms; }
+.f-stagger.f-visible > *:nth-child(5)  { transition-delay: 320ms; }
+.f-stagger.f-visible > *:nth-child(6)  { transition-delay: 400ms; }
+.f-stagger.f-visible > *:nth-child(7)  { transition-delay: 480ms; }
+.f-stagger.f-visible > *:nth-child(8)  { transition-delay: 560ms; }
+.f-stagger.f-visible > *:nth-child(9)  { transition-delay: 640ms; }
+.f-stagger.f-visible > *:nth-child(10) { transition-delay: 720ms; }
+
+/* ── 19. PARALLAX ─────────────────────────────────────────── */
+.f-parallax     { will-change: transform; }
+.f-parallax-sm  { will-change: transform; }
+.f-parallax-lg  { will-change: transform; }
+
+/* ── 20. CURSOR TRAILS ────────────────────────────────────── */
+/* Activated via flowcss.js with f-cursor-trail class on body */
+.f-cursor-blob {
+  width: 20px; height: 20px;
+  background: var(--flow-primary);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none;
+  transition: transform 0.1s, opacity 0.3s;
+  mix-blend-mode: multiply;
+  z-index: 9999;
+}
+
+/* ── 21. MAGNETIC BUTTONS ─────────────────────────────────── */
+/* Apply f-magnetic to buttons — JS in flowcss.js handles the effect */
+.f-magnetic { transition: transform 0.2s var(--flow-ease-bounce); }
+
+/* ── 22. 3D CARD TILT ─────────────────────────────────────── */
+.f-tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.1s linear;
+}
+.f-tilt .f-tilt-inner {
+  transform: translateZ(30px);
+}
+
+/* ── 23. SKELETON LOADERS ─────────────────────────────────── */
+.f-skeleton {
+  background: linear-gradient(90deg, var(--flow-gray-200) 25%, var(--flow-gray-100) 50%, var(--flow-gray-200) 75%);
+  background-size: 200% auto;
+  animation: f-shimmer 1.5s linear infinite;
+  border-radius: var(--flow-radius);
+}
+.f-skeleton-text  { height: 1em; margin-bottom: 0.5em; }
+.f-skeleton-title { height: 2em; margin-bottom: 0.75em; width: 70%; }
+.f-skeleton-avatar { width: 48px; height: 48px; border-radius: 50%; }
+.f-skeleton-img   { width: 100%; height: 200px; }
+
+/* ── 24. COMPONENT PRIMITIVES ─────────────────────────────── */
+
+/* Card */
+.f-card {
+  background: var(--flow-white);
+  border-radius: var(--flow-radius-lg);
+  box-shadow: var(--flow-shadow-md);
+  padding: var(--flow-space-6);
+  transition: box-shadow var(--flow-dur-base) var(--flow-ease), transform var(--flow-dur-base) var(--flow-ease);
+}
+.f-card:hover {
+  box-shadow: var(--flow-shadow-lg);
+  transform: translateY(-2px);
+}
+.f-card-flat {
+  background: var(--flow-white);
+  border: 1px solid var(--flow-gray-200);
+  border-radius: var(--flow-radius-lg);
+  padding: var(--flow-space-6);
+}
+.f-card-dark {
+  background: var(--flow-gray-900);
+  border: 1px solid var(--flow-gray-700);
+  border-radius: var(--flow-radius-lg);
+  padding: var(--flow-space-6);
+  color: var(--flow-white);
+}
+.f-card-glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--flow-radius-lg);
+  padding: var(--flow-space-6);
+}
+
+/* Buttons */
+.f-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--flow-space-2);
+  padding: var(--flow-space-3) var(--flow-space-6);
+  border-radius: var(--flow-radius);
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  transition: all var(--flow-dur-base) var(--flow-ease);
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 1;
+}
+.f-btn-primary   { background: var(--flow-primary);   color: white; }
+.f-btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: var(--flow-shadow-md); }
+.f-btn-secondary { background: var(--flow-secondary); color: white; }
+.f-btn-secondary:hover { background: #6d28d9; transform: translateY(-1px); }
+.f-btn-danger    { background: var(--flow-danger);    color: white; }
+.f-btn-danger:hover { background: #b91c1c; }
+.f-btn-success   { background: var(--flow-success);   color: white; }
+.f-btn-outline   { background: transparent; border: 2px solid var(--flow-primary); color: var(--flow-primary); }
+.f-btn-outline:hover { background: var(--flow-primary); color: white; }
+.f-btn-ghost     { background: transparent; color: var(--flow-gray-700); }
+.f-btn-ghost:hover { background: var(--flow-gray-100); }
+.f-btn-gradient  { background: var(--flow-gradient-primary); color: white; }
+.f-btn-gradient:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: var(--flow-shadow-glow-primary); }
+.f-btn-sm  { padding: var(--flow-space-2) var(--flow-space-4); font-size: 0.8rem; }
+.f-btn-lg  { padding: var(--flow-space-4) var(--flow-space-8); font-size: 1rem; }
+.f-btn-xl  { padding: var(--flow-space-5) var(--flow-space-10); font-size: 1.1rem; border-radius: var(--flow-radius-md); }
+.f-btn-icon { padding: var(--flow-space-3); border-radius: var(--flow-radius-full); }
+.f-btn-rounded { border-radius: var(--flow-radius-full); }
+
+/* Badge */
+.f-badge {
+  display: inline-flex; align-items: center;
+  padding: 0.2em 0.65em;
+  font-size: 0.75rem; font-weight: 600;
+  border-radius: var(--flow-radius-full);
+  line-height: 1;
+}
+.f-badge-primary   { background: rgba(37,99,235,.12);   color: var(--flow-primary); }
+.f-badge-secondary { background: rgba(124,58,237,.12);  color: var(--flow-secondary); }
+.f-badge-success   { background: rgba(22,163,74,.12);   color: var(--flow-success); }
+.f-badge-warning   { background: rgba(217,119,6,.12);   color: var(--flow-warning); }
+.f-badge-danger    { background: rgba(220,38,38,.12);   color: var(--flow-danger); }
+.f-badge-gray      { background: var(--flow-gray-100);  color: var(--flow-gray-600); }
+
+/* Alert */
+.f-alert {
+  display: flex; align-items: flex-start; gap: var(--flow-space-3);
+  padding: var(--flow-space-4);
+  border-radius: var(--flow-radius);
+  border-left: 4px solid;
+}
+.f-alert-info    { background: rgba(8,145,178,.08);  border-color: var(--flow-info);    color: #0369a1; }
+.f-alert-success { background: rgba(22,163,74,.08);  border-color: var(--flow-success); color: #15803d; }
+.f-alert-warning { background: rgba(217,119,6,.08);  border-color: var(--flow-warning); color: #b45309; }
+.f-alert-danger  { background: rgba(220,38,38,.08);  border-color: var(--flow-danger);  color: #b91c1c; }
+
+/* Avatar */
+.f-avatar {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px;
+  border-radius: var(--flow-radius-full);
+  background: var(--flow-gradient-primary);
+  color: white; font-weight: 600; font-size: 0.9rem;
+  overflow: hidden; flex-shrink: 0;
+}
+.f-avatar-sm  { width: 28px; height: 28px; font-size: 0.7rem; }
+.f-avatar-lg  { width: 56px; height: 56px; font-size: 1.2rem; }
+.f-avatar-xl  { width: 80px; height: 80px; font-size: 1.6rem; }
+.f-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.f-avatar-group { display: flex; }
+.f-avatar-group .f-avatar { border: 2px solid white; margin-left: -10px; }
+.f-avatar-group .f-avatar:first-child { margin-left: 0; }
+
+/* Divider */
+.f-divider       { border: none; border-top: 1px solid var(--flow-gray-200); margin: var(--flow-space-4) 0; }
+.f-divider-dark  { border: none; border-top: 1px solid var(--flow-gray-700); margin: var(--flow-space-4) 0; }
+.f-divider-label { display: flex; align-items: center; gap: var(--flow-space-3); color: var(--flow-gray-400); font-size: 0.85rem; }
+.f-divider-label::before, .f-divider-label::after { content: ''; flex: 1; height: 1px; background: var(--flow-gray-200); }
+
+/* Input */
+.f-input {
+  width: 100%;
+  padding: var(--flow-space-3) var(--flow-space-4);
+  border: 1.5px solid var(--flow-gray-300);
+  border-radius: var(--flow-radius);
+  font-size: 0.9rem;
+  background: white;
+  color: var(--flow-gray-900);
+  outline: none;
+  transition: border-color var(--flow-dur-fast) var(--flow-ease), box-shadow var(--flow-dur-fast) var(--flow-ease);
+}
+.f-input:focus { border-color: var(--flow-primary); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+.f-input-error { border-color: var(--flow-danger); }
+.f-input-error:focus { box-shadow: 0 0 0 3px rgba(220,38,38,.12); }
+
+/* Progress */
+.f-progress {
+  width: 100%; height: 8px;
+  background: var(--flow-gray-200);
+  border-radius: var(--flow-radius-full);
+  overflow: hidden;
+}
+.f-progress-bar {
+  height: 100%;
+  background: var(--flow-gradient-primary);
+  border-radius: var(--flow-radius-full);
+  transition: width 0.6s var(--flow-ease);
+}
+.f-progress-striped .f-progress-bar {
+  background-image: linear-gradient(45deg, rgba(255,255,255,.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.15) 50%, rgba(255,255,255,.15) 75%, transparent 75%);
+  background-size: 1rem 1rem;
+  animation: f-gradient-shift 1s linear infinite;
+}
+
+/* Tooltip */
+.f-tooltip-wrap { position: relative; display: inline-flex; }
+.f-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--flow-gray-900);
+  color: white;
+  padding: 0.3em 0.75em;
+  border-radius: var(--flow-radius-sm);
+  font-size: 0.78rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--flow-dur-fast) var(--flow-ease), transform var(--flow-dur-fast) var(--flow-ease);
+  z-index: 50;
+}
+.f-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%; transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--flow-gray-900);
+}
+.f-tooltip-wrap:hover .f-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── 25. DARK MODE ─────────────────────────────────────────── */
+.f-dark-mode {
+  --flow-white:    #0a0a0a;
+  --flow-black:    #ffffff;
+  --flow-gray-50:  #111827;
+  --flow-gray-100: #1f2937;
+  --flow-gray-200: #374151;
+  --flow-gray-300: #4b5563;
+  --flow-gray-400: #6b7280;
+  --flow-gray-500: #9ca3af;
+  --flow-gray-600: #d1d5db;
+  --flow-gray-700: #e5e7eb;
+  --flow-gray-800: #f3f4f6;
+  --flow-gray-900: #f9fafb;
+}
+
+@media (prefers-color-scheme: dark) {
+  .f-auto-dark {
+    --flow-white:    #0a0a0a;
+    --flow-gray-50:  #111827;
+    --flow-gray-100: #1f2937;
+    --flow-gray-200: #374151;
+  }
+}
+
+/* ── 26. PRINT UTILITIES ──────────────────────────────────── */
+@media print {
+  .f-no-print { display: none !important; }
+  .f-print-only { display: block !important; }
+}
+
+/* ── 27. FOCUS & ACCESSIBILITY ────────────────────────────── */
+.f-focus-ring:focus { outline: 2px solid var(--flow-primary); outline-offset: 2px; }
+.f-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0; }
+
+/* Reduce motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,::before,::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
