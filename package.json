@@ -1,0 +1,31 @@
+{
+  "name": "flowcss-style",
+  "version": "1.0.0",
+  "description": "A modern CSS framework with 40+ animations, components, glassmorphism, and dark mode.",
+  "main": "dist/flow.css",
+  "style": "dist/flow.css",
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "css",
+    "framework",
+    "animations",
+    "utility",
+    "glassmorphism",
+    "dark-mode",
+    "tailwind-alternative"
+  ],
+  "author": "Your Name <you@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com//flowcss.git"
+  },
+  "homepage": "https://flowcss.vercel.app",
+  "scripts": {
+    "prepublishOnly": "echo Build and copy dist files here"
+  }
+}
