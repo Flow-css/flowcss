@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowCSS Docs — Animation-First CSS Framework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../src/flow.css" />
+  <style>
+    :root { --accent: #4f46e5; --brand: #1a1a2e; --sidebar-w: 260px; }
+    body { font-family: 'DM Sans', sans-serif; margin: 0; background: #f8f8fc; color: #1a1a2e; display: flex; }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-w); min-height: 100vh;
+      position: fixed; top: 0; left: 0; bottom: 0;
+      background: white; border-right: 1px solid rgba(0,0,0,.07);
+      overflow-y: auto; z-index: 50;
+      padding: 1.5rem 0;
+    }
+    .sidebar-logo {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-family: 'DM Serif Display', serif; font-size: 1.25rem;
+      color: var(--brand); padding: 0 1.5rem 1.5rem;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      margin-bottom: 1rem;
+    }
+    .sidebar-logo-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; }
+    .sidebar-section { padding: 0 1.5rem; margin-bottom: 1.75rem; }
+    .sidebar-section-title { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; margin-bottom: 0.5rem; }
+    .sidebar a {
+      display: block; padding: 0.4rem 1.5rem;
+      color: #6b7280; text-decoration: none; font-size: 0.875rem;
+      border-radius: 0; transition: all 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .sidebar a:hover, .sidebar a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: rgba(79,70,229,.04);
+    }
+
+    /* MAIN */
+    .main { margin-left: var(--sidebar-w); flex: 1; max-width: 900px; padding: 4rem 3rem; }
+
+    /* Section */
+    .doc-section { margin-bottom: 5rem; scroll-margin-top: 2rem; }
+    h1.doc-title { font-family: 'DM Serif Display', serif; font-size: 2.5rem; color: var(--brand); margin-bottom: 0.5rem; }
+    h2.doc-h2   { font-family: 'DM Serif Display', serif; font-size: 1.75rem; color: var(--brand); margin: 0 0 1rem; padding-top: 0.25rem; border-top: 1px solid rgba(0,0,0,.06); padding-top: 1.5rem; }
+    h3.doc-h3   { font-size: 1.05rem; font-weight: 600; color: var(--brand); margin: 1.5rem 0 0.5rem; }
+    .doc-intro  { color: #6b7280; line-height: 1.8; font-size: 1rem; margin-bottom: 1.5rem; max-width: 60ch; }
+    p.doc-p     { color: #6b7280; line-height: 1.8; margin-bottom: 1rem; }
+
+    /* Code */
+    pre {
+      background: #0f172a;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      margin: 1rem 0 1.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.83rem;
+      line-height: 1.75;
+    }
+    code { font-family: 'DM Mono', monospace; font-size: 0.85em; }
+    .inline-code {
+      background: rgba(79,70,229,.08);
+      color: var(--accent);
+      padding: 0.1em 0.45em;
+      border-radius: 4px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85em;
+    }
+    .code-html  { color: #e2e8f0; }
+    .c-tag      { color: #7dd3fc; }
+    .c-attr     { color: #86efac; }
+    .c-str      { color: #fde68a; }
+    .c-comment  { color: #475569; }
+    .c-kw       { color: #c084fc; }
+
+    /* Demo box */
+    .demo-box {
+      background: white;
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 1rem 0;
+      display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
+    }
+
+    /* Table */
+    .doc-table { width: 100%; border-collapse: collapse; margin: 1rem 0 2rem; font-size: 0.875rem; }
+    .doc-table th { background: #f3f4f6; padding: 0.6rem 1rem; text-align: left; font-weight: 600; color: var(--brand); border-bottom: 1px solid #e5e7eb; }
+    .doc-table td { padding: 0.6rem 1rem; border-bottom: 1px solid #f3f4f6; color: #4b5563; }
+    .doc-table tr:last-child td { border-bottom: none; }
+    .doc-table code { background: rgba(79,70,229,.08); color: var(--accent); padding: 0.1em 0.4em; border-radius: 4px; font-size: 0.8em; }
+
+    /* Alert box */
+    .doc-alert { background: rgba(79,70,229,.06); border: 1px solid rgba(79,70,229,.2); border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0; color: #3730a3; font-size: 0.9rem; line-height: 1.6; }
+    .doc-alert strong { font-weight: 600; }
+
+    /* Step */
+    .steps { list-style: none; padding: 0; counter-reset: step; }
+    .steps li { counter-increment: step; padding: 1rem 1rem 1rem 3.5rem; position: relative; border-left: 2px solid #e5e7eb; margin-left: 1rem; margin-bottom: 0.5rem; }
+    .steps li::before { content: counter(step); position: absolute; left: -1.1rem; top: 0.9rem; width: 22px; height: 22px; background: var(--accent); color: white; border-radius: 50%; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .steps li:last-child { border-left-color: transparent; }
+
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .main { margin-left: 0; padding: 2rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <a href="index.html" class="sidebar-logo"><span class="sidebar-logo-dot"></span>FlowCSS</a>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Getting Started</div>
+    <a href="#install">Installation</a>
+    <a href="#cdn">CDN Usage</a>
+    <a href="#npm-guide">NPM + Publish Guide</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Core Utilities</div>
+    <a href="#layout">Layout & Flex</a>
+    <a href="#spacing">Spacing</a>
+    <a href="#typography">Typography</a>
+    <a href="#colors">Colors & Gradients</a>
+    <a href="#shadows">Shadows & Glow</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Animations</div>
+    <a href="#keyframes">Keyframes Reference</a>
+    <a href="#anim-utils">Animation Classes</a>
+    <a href="#delays">Delays & Duration</a>
+    <a href="#scroll-reveal">Scroll Reveal</a>
+    <a href="#stagger">Stagger Children</a>
+    <a href="#hover">Hover Effects</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">JS Features</div>
+    <a href="#parallax">Parallax</a>
+    <a href="#magnetic">Magnetic Buttons</a>
+    <a href="#tilt">3D Tilt</a>
+    <a href="#cursor-trail">Cursor Trail</a>
+    <a href="#countup">Count-Up</a>
+    <a href="#typewriter">Typewriter</a>
+    <a href="#ripple">Ripple Effect</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Components</div>
+    <a href="#cards">Cards</a>
+    <a href="#buttons">Buttons</a>
+    <a href="#badges">Badges</a>
+    <a href="#glass">Glassmorphism</a>
+    <a href="#skeleton">Skeleton</a>
+    <a href="#alerts">Alerts</a>
+    <a href="#inputs">Inputs</a>
+    <a href="#tooltip">Tooltips</a>
+    <a href="#progress">Progress</a>
+    <a href="#avatar">Avatars</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Other</div>
+    <a href="#dark-mode">Dark Mode</a>
+    <a href="#responsive">Responsive</a>
+    <a href="#vscode">VSCode Extension</a>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- ── INSTALL ── -->
+  <div class="doc-section" id="install">
+    <h1 class="doc-title">FlowCSS Documentation</h1>
+    <p class="doc-intro">FlowCSS is an animation-first CSS utility framework with zero build requirements. Add one CSS file, optionally one JS file, and unlock 200+ utility classes including 40+ animations, scroll reveal, glassmorphism, magnetic buttons, and full component primitives.</p>
+
+    <h2 class="doc-h2">Installation</h2>
+    <h3 class="doc-h3">via npm</h3>
+<pre><code>npm install flowcss</code></pre>
+    Then import in your project:
+<pre><code><span class="c-comment">/* In your main CSS or JS file */</span>
+import 'flowcss/dist/flow.css';
+import 'flowcss/dist/flow.js'; <span class="c-comment">// optional — for JS features</span></code></pre>
+
+    <h3 class="doc-h3">Direct HTML</h3>
+<pre><code><span class="c-tag">&lt;link</span> <span class="c-attr">rel</span>=<span class="c-str">"stylesheet"</span> <span class="c-attr">href</span>=<span class="c-str">"flow.css"</span><span class="c-tag">&gt;</span>
+<span class="c-tag">&lt;script</span> <span class="c-attr">src</span>=<span class="c-str">"flow.js"</span> <span class="c-attr">defer</span><span class="c-tag">&gt;&lt;/script&gt;</span></code></pre>
+  </div>
+
+  <!-- ── CDN ── -->
+  <div class="doc-section" id="cdn">
+    <h2 class="doc-h2">CDN Usage</h2>
+    <p class="doc-p">Use FlowCSS directly from jsDelivr without installing anything:</p>
+<pre><code><span class="c-comment">&lt;!-- CSS --&gt;</span>
+<span class="c-tag">&lt;link</span> <span class="c-attr">rel</span>=<span class="c-str">"stylesheet"</span>
+      <span class="c-attr">href</span>=<span class="c-str">"https://cdn.jsdelivr.net/npm/flowcss@1/dist/flow.min.css"</span><span class="c-tag">&gt;</span>
+
+<span class="c-comment">&lt;!-- JS (optional) --&gt;</span>
+<span class="c-tag">&lt;script</span> <span class="c-attr">src</span>=<span class="c-str">"https://cdn.jsdelivr.net/npm/flowcss@1/dist/flow.min.js"</span>
+        <span class="c-attr">defer</span><span class="c-tag">&gt;&lt;/script&gt;</span></code></pre>
+  </div>
+
+  <!-- ── NPM PUBLISH GUIDE ── -->
+  <div class="doc-section" id="npm-guide">
+    <h2 class="doc-h2">Publishing FlowCSS on NPM</h2>
+    <p class="doc-p">Follow these steps to publish your own fork or a derived framework to the npm registry.</p>
+
+    <ol class="steps">
+      <li>
+        <strong>Create an npm account</strong><br>
+        Go to <a href="https://www.npmjs.com/signup" style="color:var(--accent);">npmjs.com/signup</a> and register. Verify your email.
+      </li>
+      <li>
+        <strong>Login locally</strong><br>
+<pre><code>npm login
+# Enter your username, password, and OTP if 2FA is on</code></pre>
+      </li>
+      <li>
+        <strong>Set up package.json</strong><br>
+<pre><code>{
+  <span class="c-str">"name"</span>: <span class="c-str">"flowcss"</span>,
+  <span class="c-str">"version"</span>: <span class="c-str">"1.0.0"</span>,
+  <span class="c-str">"description"</span>: <span class="c-str">"Animation-first CSS utility framework"</span>,
+  <span class="c-str">"main"</span>: <span class="c-str">"dist/flow.js"</span>,
+  <span class="c-str">"style"</span>: <span class="c-str">"dist/flow.css"</span>,
+  <span class="c-str">"files"</span>: [<span class="c-str">"dist"</span>, <span class="c-str">"README.md"</span>],
+  <span class="c-str">"keywords"</span>: [<span class="c-str">"css"</span>, <span class="c-str">"animation"</span>, <span class="c-str">"utility"</span>, <span class="c-str">"framework"</span>],
+  <span class="c-str">"license"</span>: <span class="c-str">"MIT"</span>,
+  <span class="c-str">"repository"</span>: {
+    <span class="c-str">"type"</span>: <span class="c-str">"git"</span>,
+    <span class="c-str">"url"</span>: <span class="c-str">"https://github.com/yourname/flowcss"</span>
+  },
+  <span class="c-str">"scripts"</span>: {
+    <span class="c-str">"build"</span>: <span class="c-str">"node scripts/build.js"</span>,
+    <span class="c-str">"prepublishOnly"</span>: <span class="c-str">"npm run build"</span>
+  }
+}</code></pre>
+      </li>
+      <li>
+        <strong>Build your dist files</strong><br>
+        Run the build script to minify CSS and JS into <code class="inline-code">dist/</code>:
+<pre><code>npm run build</code></pre>
+      </li>
+      <li>
+        <strong>Publish</strong><br>
+<pre><code>npm publish --access public</code></pre>
+        For scoped packages (e.g., <code class="inline-code">@yourname/flowcss</code>), make sure the name in <code class="inline-code">package.json</code> starts with your npm scope.
+      </li>
+      <li>
+        <strong>Updating versions</strong><br>
+<pre><code>npm version patch   # 1.0.0 → 1.0.1 (bug fix)
+npm version minor   # 1.0.0 → 1.1.0 (new feature)
+npm version major   # 1.0.0 → 2.0.0 (breaking change)
+npm publish</code></pre>
+      </li>
+    </ol>
+
+    <div class="doc-alert">
+      <strong>Tip:</strong> Add a <code class="inline-code">.npmignore</code> file to exclude <code class="inline-code">src/</code>, <code class="inline-code">docs/</code>, and <code class="inline-code">node_modules/</code> from the published package. Only <code class="inline-code">dist/</code> needs to be published.
+    </div>
+  </div>
+
+  <!-- ── LAYOUT ── -->
+  <div class="doc-section" id="layout">
+    <h2 class="doc-h2">Layout & Flex</h2>
+    <p class="doc-p">FlowCSS includes powerful shorthand layout classes for flex and grid that eliminate repetitive declarations.</p>
+    <table class="doc-table">
+      <thead><tr><th>Class</th><th>CSS Output</th></tr></thead>
+      <tbody>
+        <tr><td><code>f-center</code></td><td>display:flex; align-items:center; justify-content:center</td></tr>
+        <tr><td><code>f-between</code></td><td>display:flex; align-items:center; justify-content:space-between</td></tr>
+        <tr><td><code>f-col</code></td><td>display:flex; flex-direction:column</td></tr>
+        <tr><td><code>f-grid-3</code></td><td>display:grid; grid-template-columns:repeat(3,1fr)</td></tr>
+        <tr><td><code>f-grid-auto</code></td><td>auto-fill grid with min 200px columns</td></tr>
+        <tr><td><code>f-stagger</code></td><td>Scroll-triggered staggered children (JS)</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="doc-h3">Example</h3>
+<pre><code><span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-grid-auto f-gap-6"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-card"</span><span class="c-tag">&gt;</span>Card 1<span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-card"</span><span class="c-tag">&gt;</span>Card 2<span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-card"</span><span class="c-tag">&gt;</span>Card 3<span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;/div&gt;</span></code></pre>
+  </div>
+
+  <!-- ── TYPOGRAPHY ── -->
+  <div class="doc-section" id="typography">
+    <h2 class="doc-h2">Typography</h2>
+    <p class="doc-p">Text sizes, weights, gradients, and the typewriter effect.</p>
+
+    <h3 class="doc-h3">Text Gradients (unique to FlowCSS)</h3>
+    <div class="demo-box">
+      <span style="font-family:'DM Serif Display',serif;font-size:2rem;background:linear-gradient(135deg,#4f46e5,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Gradient Text</span>
+      <span style="font-family:'DM Serif Display',serif;font-size:2rem;background:linear-gradient(135deg,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Warm Gradient</span>
+    </div>
+<pre><code><span class="c-tag">&lt;h1</span> <span class="c-attr">class</span>=<span class="c-str">"f-text-gradient-primary f-text-5xl f-font-bold"</span><span class="c-tag">&gt;</span>
+  Hello World
+<span class="c-tag">&lt;/h1&gt;</span></code></pre>
+
+    <h3 class="doc-h3">Typewriter (JS)</h3>
+<pre><code><span class="c-tag">&lt;h2</span> <span class="c-attr">data-flow-type</span>=<span class="c-str">"Design|Build|Ship"</span>
+     <span class="c-attr">data-flow-type-speed</span>=<span class="c-str">"80"</span>
+     <span class="c-attr">data-flow-type-pause</span>=<span class="c-str">"1500"</span><span class="c-tag">&gt;&lt;/h2&gt;</span></code></pre>
+  </div>
+
+  <!-- ── SCROLL REVEAL ── -->
+  <div class="doc-section" id="scroll-reveal">
+    <h2 class="doc-h2">Scroll Reveal</h2>
+    <p class="doc-p">Elements animate into view as you scroll. Powered by Intersection Observer in <code class="inline-code">flow.js</code>.</p>
+    <table class="doc-table">
+      <thead><tr><th>Class</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code>f-reveal</code></td><td>Fade + slide up</td></tr>
+        <tr><td><code>f-reveal-left</code></td><td>Fade + slide from left</td></tr>
+        <tr><td><code>f-reveal-right</code></td><td>Fade + slide from right</td></tr>
+        <tr><td><code>f-reveal-zoom</code></td><td>Fade + scale up</td></tr>
+        <tr><td><code>f-reveal-flip</code></td><td>Fade + Y-axis flip</td></tr>
+        <tr><td><code>f-repeat</code></td><td>Re-animates every time element enters viewport</td></tr>
+      </tbody>
+    </table>
+<pre><code><span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-reveal"</span> <span class="c-attr">data-flow-delay</span>=<span class="c-str">"200"</span><span class="c-tag">&gt;</span>
+  Animates on scroll with 200ms delay
+<span class="c-tag">&lt;/div&gt;</span>
+
+<span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-reveal-zoom f-repeat"</span><span class="c-tag">&gt;</span>
+  Animates every time it enters viewport
+<span class="c-tag">&lt;/div&gt;</span></code></pre>
+  </div>
+
+  <!-- ── STAGGER ── -->
+  <div class="doc-section" id="stagger">
+    <h2 class="doc-h2">Stagger Children</h2>
+    <p class="doc-p">Apply <code class="inline-code">f-stagger</code> to a parent element. When it enters the viewport, each child animates in with an increasing delay automatically.</p>
+<pre><code><span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-stagger f-grid-3 f-gap-4"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-card"</span><span class="c-tag">&gt;</span>Appears first<span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-card"</span><span class="c-tag">&gt;</span>Appears second<span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-card"</span><span class="c-tag">&gt;</span>Appears third<span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;/div&gt;</span></code></pre>
+    <div class="doc-alert">Stagger supports up to 10 children with 80ms between each. Children 11+ share the last delay.</div>
+  </div>
+
+  <!-- ── KEYFRAMES ── -->
+  <div class="doc-section" id="keyframes">
+    <h2 class="doc-h2">Animation Reference</h2>
+    <table class="doc-table">
+      <thead><tr><th>Class</th><th>Type</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>f-anim-fade-in</code></td><td>Entrance</td><td>Fade from opacity 0 to 1</td></tr>
+        <tr><td><code>f-anim-slide-up</code></td><td>Entrance</td><td>Slide up + fade in</td></tr>
+        <tr><td><code>f-anim-slide-left</code></td><td>Entrance</td><td>Slide from right + fade</td></tr>
+        <tr><td><code>f-anim-zoom-in</code></td><td>Entrance</td><td>Scale 0.85 → 1 + fade</td></tr>
+        <tr><td><code>f-anim-bounce-in</code></td><td>Entrance</td><td>Spring scale bounce</td></tr>
+        <tr><td><code>f-anim-flip-x</code></td><td>Entrance</td><td>X-axis rotation flip</td></tr>
+        <tr><td><code>f-anim-flip-y</code></td><td>Entrance</td><td>Y-axis rotation flip</td></tr>
+        <tr><td><code>f-anim-bounce</code></td><td>Continuous</td><td>Vertical bounce loop</td></tr>
+        <tr><td><code>f-anim-float</code></td><td>Continuous</td><td>Gentle vertical levitation</td></tr>
+        <tr><td><code>f-anim-pulse</code></td><td>Continuous</td><td>Opacity pulse</td></tr>
+        <tr><td><code>f-anim-spin</code></td><td>Continuous</td><td>360° rotation</td></tr>
+        <tr><td><code>f-anim-spin-slow</code></td><td>Continuous</td><td>Slow 360° rotation</td></tr>
+        <tr><td><code>f-anim-morph</code></td><td>Continuous</td><td>Border-radius blob morph</td></tr>
+        <tr><td><code>f-anim-heartbeat</code></td><td>Attention</td><td>Double-pulse heartbeat</td></tr>
+        <tr><td><code>f-anim-shake</code></td><td>Attention</td><td>Horizontal shake</td></tr>
+        <tr><td><code>f-anim-wobble</code></td><td>Attention</td><td>Rotation wobble</td></tr>
+        <tr><td><code>f-anim-tada</code></td><td>Attention</td><td>Scale + rotate tada</td></tr>
+        <tr><td><code>f-anim-jello</code></td><td>Attention</td><td>Jello skew effect</td></tr>
+        <tr><td><code>f-anim-gradient</code></td><td>Background</td><td>Animated gradient shift</td></tr>
+        <tr><td><code>f-anim-aurora</code></td><td>Background</td><td>Aurora hue-shift gradient</td></tr>
+        <tr><td><code>f-anim-shimmer</code></td><td>Text</td><td>Shimmering text effect</td></tr>
+        <tr><td><code>f-anim-typewriter</code></td><td>Text</td><td>CSS typewriter with cursor</td></tr>
+        <tr><td><code>f-anim-ping</code></td><td>Attention</td><td>Scale-out ping (like notification dot)</td></tr>
+        <tr><td><code>f-anim-sway</code></td><td>Continuous</td><td>Gentle side-to-side rotation</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── MAGNETIC ── -->
+  <div class="doc-section" id="magnetic">
+    <h2 class="doc-h2">Magnetic Buttons</h2>
+    <p class="doc-p">Adds a physics-based cursor attraction to buttons. The element follows the cursor within its bounds on hover.</p>
+<pre><code><span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-str">"f-btn f-btn-primary f-magnetic"</span><span class="c-tag">&gt;</span>
+  Magnetic Button
+<span class="c-tag">&lt;/button&gt;</span></code></pre>
+    <div class="demo-box">
+      <button class="f-btn f-btn-primary f-magnetic">Hover over me</button>
+      <button class="f-btn f-btn-outline f-magnetic">Me too</button>
+    </div>
+  </div>
+
+  <!-- ── TILT ── -->
+  <div class="doc-section" id="tilt">
+    <h2 class="doc-h2">3D Card Tilt</h2>
+    <p class="doc-p">Real-time mouse-tracked 3D tilt perspective on any element. Add an inner element with <code class="inline-code">f-tilt-inner</code> for a floating depth layer.</p>
+<pre><code><span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-card f-tilt"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;h3</span> <span class="c-attr">class</span>=<span class="c-str">"f-tilt-inner"</span><span class="c-tag">&gt;</span>Floating layer<span class="c-tag">&lt;/h3&gt;</span>
+  <span class="c-tag">&lt;p&gt;</span>Move your cursor over this card<span class="c-tag">&lt;/p&gt;</span>
+<span class="c-tag">&lt;/div&gt;</span></code></pre>
+  </div>
+
+  <!-- ── GLASS ── -->
+  <div class="doc-section" id="glass">
+    <h2 class="doc-h2">Glassmorphism</h2>
+    <p class="doc-p">Three glass variants with backdrop blur — works best on colorful backgrounds.</p>
+<pre><code><span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-glass f-p-6 f-rounded-xl"</span><span class="c-tag">&gt;</span>Glass card<span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-glass-dark f-p-6 f-rounded-xl"</span><span class="c-tag">&gt;</span>Dark glass<span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-glass-primary f-p-6 f-rounded-xl"</span><span class="c-tag">&gt;</span>Primary tinted<span class="c-tag">&lt;/div&gt;</span></code></pre>
+  </div>
+
+  <!-- ── COUNTUP ── -->
+  <div class="doc-section" id="countup">
+    <h2 class="doc-h2">Count-Up Numbers</h2>
+    <p class="doc-p">Animate numbers from 0 to a target value when they scroll into view.</p>
+<pre><code><span class="c-tag">&lt;span</span>
+  <span class="c-attr">data-flow-count</span>=<span class="c-str">"5000"</span>
+  <span class="c-attr">data-flow-prefix</span>=<span class="c-str">"$"</span>
+  <span class="c-attr">data-flow-suffix</span>=<span class="c-str">"+"</span>
+  <span class="c-attr">data-flow-duration</span>=<span class="c-str">"2000"</span>
+  <span class="c-attr">data-flow-decimals</span>=<span class="c-str">"0"</span>
+<span class="c-tag">&gt;</span>0<span class="c-tag">&lt;/span&gt;</span></code></pre>
+  </div>
+
+  <!-- ── DARK MODE ── -->
+  <div class="doc-section" id="dark-mode">
+    <h2 class="doc-h2">Dark Mode</h2>
+    <p class="doc-p">Toggle dark mode by adding <code class="inline-code">f-dark-mode</code> to <code class="inline-code">&lt;html&gt;</code> or <code class="inline-code">&lt;body&gt;</code>. Use the JS helper or the built-in toggle function.</p>
+<pre><code><span class="c-comment">&lt;!-- Toggle button --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">onclick</span>=<span class="c-str">"flowToggleDark(this)"</span><span class="c-tag">&gt;</span>🌙 Dark Mode<span class="c-tag">&lt;/button&gt;</span>
+
+<span class="c-comment">/* Or in JavaScript */</span>
+window.FlowCSS.toggleDark();</code></pre>
+    <p class="doc-p">State is persisted in <code class="inline-code">localStorage</code> automatically.</p>
+  </div>
+
+  <!-- ── VSCODE ── -->
+  <div class="doc-section" id="vscode">
+    <h2 class="doc-h2">VSCode Extension</h2>
+    <p class="doc-p">The FlowCSS VSCode extension is included in the project under <code class="inline-code">vscode-extension/</code>. It provides:</p>
+    <ul style="color:#6b7280;line-height:2;padding-left:1.5rem;">
+      <li>Autocomplete for all <code class="inline-code">f-*</code> classes</li>
+      <li>Hover documentation showing the CSS output</li>
+      <li>Snippet library for cards, buttons, grids, and animations</li>
+      <li>Color previews for gradient utilities</li>
+    </ul>
+
+    <h3 class="doc-h3">Installing the extension locally</h3>
+    <ol class="steps">
+      <li>Open the <code class="inline-code">vscode-extension/</code> folder in VSCode</li>
+      <li>Run <code class="inline-code">npm install</code> to install the vsce toolchain</li>
+      <li>Press <code class="inline-code">F5</code> to launch the Extension Development Host</li>
+      <li>To package: <code class="inline-code">npx vsce package</code> — produces a <code class="inline-code">.vsix</code> file</li>
+      <li>Install the <code class="inline-code">.vsix</code>: Extensions panel → ⋮ → Install from VSIX</li>
+    </ol>
+
+    <h3 class="doc-h3">Publishing to VS Marketplace</h3>
+    <ol class="steps">
+      <li>Create a publisher at <a href="https://marketplace.visualstudio.com/manage" style="color:var(--accent)">marketplace.visualstudio.com/manage</a></li>
+      <li>Generate a Personal Access Token (PAT) with Marketplace scope</li>
+      <li>Login: <code class="inline-code">npx vsce login yourpublisher</code></li>
+      <li>Publish: <code class="inline-code">npx vsce publish</code></li>
+    </ol>
+  </div>
+
+  <!-- ── SKELETON ── -->
+  <div class="doc-section" id="skeleton">
+    <h2 class="doc-h2">Skeleton Loaders</h2>
+<pre><code><span class="c-comment">&lt;!-- Text skeleton --&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-skeleton f-skeleton-title"</span><span class="c-tag">&gt;&lt;/div&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-skeleton f-skeleton-text"</span><span class="c-tag">&gt;&lt;/div&gt;</span>
+
+<span class="c-comment">&lt;!-- Avatar skeleton --&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-skeleton f-skeleton-avatar"</span><span class="c-tag">&gt;&lt;/div&gt;</span>
+
+<span class="c-comment">&lt;!-- Image skeleton --&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">class</span>=<span class="c-str">"f-skeleton f-skeleton-img"</span><span class="c-tag">&gt;&lt;/div&gt;</span></code></pre>
+    <div class="demo-box" style="flex-direction:column;max-width:280px;align-items:stretch;">
+      <div class="f-skeleton f-skeleton-title"></div>
+      <div class="f-skeleton f-skeleton-text"></div>
+      <div class="f-skeleton f-skeleton-text" style="width:70%"></div>
+      <div style="display:flex;gap:0.75rem;align-items:center;margin-top:0.5rem">
+        <div class="f-skeleton f-skeleton-avatar"></div>
+        <div style="flex:1">
+          <div class="f-skeleton f-skeleton-text" style="width:50%;margin-bottom:.3rem"></div>
+          <div class="f-skeleton f-skeleton-text" style="width:80%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script src="../src/flow.js"></script>
+</body>
+</html>
