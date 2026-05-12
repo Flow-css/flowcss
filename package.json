@@ -22,7 +22,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com//flowcss.git"
+    "url": "https://github.com/Flow-css/flowcss"
   },
   "homepage": "https://flowcss.vercel.app",
   "scripts": {
